@@ -1,0 +1,3 @@
+include ':Reflex-Lib'
+include ':app'
+rootProject.name = "Reflex"

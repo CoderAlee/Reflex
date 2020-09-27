@@ -1,0 +1,14 @@
+apply plugin: 'java-library'
+apply plugin: "com.github.johnrengelman.shadow"
+dependencies {
+
+}
+
+shadowJar {
+    baseName = 'Reflex'
+    archiveVersion = '1.0.0'
+}
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
