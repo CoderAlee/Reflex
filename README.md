@@ -3,4 +3,4 @@
 
 ![build](https://img.shields.io/badge/build-passing-green.svg)
 [![](https://jitpack.io/v/CoderAlee/Reflex.svg)](https://jitpack.io/#CoderAlee/Reflex)
-![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0)
