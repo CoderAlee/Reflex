@@ -1,3 +1,5 @@
-include ':Reflex-Lib'
 include ':app'
 rootProject.name = "Reflex"
+if (CITING_THE_SOURCE_CODE.toBoolean()){
+    include ':Reflex-Lib'
+}

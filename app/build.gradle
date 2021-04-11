@@ -38,6 +38,6 @@ dependencies {
     if (CITING_THE_SOURCE_CODE.toBoolean()){
         implementation project(path: ':Reflex-Lib')
     }else {
-        implementation 'com.github.CoderAlee:Reflex:1.0.0'
+        implementation 'org.alee.component:reflex:2.0.0'
     }
 }
