@@ -17,6 +17,7 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
+                from components.java
                 groupId = 'org.alee.component.tools'
                 artifactId = 'reflex'
                 version = '2.0.2'
