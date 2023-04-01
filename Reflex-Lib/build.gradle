@@ -9,7 +9,7 @@ dependencies {
 
 shadowJar {
     baseName = 'Reflex'
-    archiveVersion = '1.0.0'
+    archiveVersion = '2.1.0'
 }
 compileJava {
     sourceCompatibility = '1.8'
@@ -21,7 +21,7 @@ publish {
     repoName = 'Alee' //Bintray上创建的仓库名,如果你创建的是maven,则可以干掉这一行,否则需要指定仓库名
     groupId = 'org.alee.component' //依赖名implementation 'x:y:z'中的x
     artifactId = 'reflex' //依赖名implementation 'x:y:z'中的y
-    publishVersion = '2.0.0' //依赖名implementation 'x:y:z'中的z
+    publishVersion = '2.1.0' //依赖名implementation 'x:y:z'中的z
     desc = '一款声明式反射框架' //对这个库的描述
     website = 'https://github.com/CoderAlee/Reflex' //VCS地址,填写该项目的Github地址就好
 }

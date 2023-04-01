@@ -1,7 +1,10 @@
 package org.alee.reflex.demo;
 
+import android.graphics.drawable.Drawable;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Reflex";
     private TextView mTextView;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,20 @@ public class MainActivity extends AppCompatActivity {
             ReflexDemoMapping.doSomething.call(reflexDemo);
             ReflexDemoMapping.printLog.call(ReflexDemoMapping.TAG.get(), "Id is :" + ReflexDemoMapping.mId.get(reflexDemo));
             Log.i(TAG, ReflexDemoMapping.doSomething2.call(reflexDemo, "Hi i will do Other") + "");
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        KeyboardView view = new KeyboardView(this, null);
+        try {
+            // 测试反射被UnsupportedAppUsage 标记的属性
+            Drawable drawable = KeyboardViewMapping.mKeyBackground.get(view);
+            Log.i(TAG, "drawable:" + drawable);
+            boolean isKeyboardChanged = KeyboardViewMapping.mKeyboardChanged.get(view);
+            Log.i(TAG, "isKeyboardChanged:" + isKeyboardChanged);
+            boolean isFactorySet = LayoutInflaterMapping.mFactorySet.get(getLayoutInflater());
+            Log.i(TAG, "isFactorySet:" + isFactorySet);
+            LayoutInflater.Factory factory = LayoutInflaterMapping.mFactory.get(getLayoutInflater());
+            Log.i(TAG, "factory:" + factory);
         } catch (Throwable e) {
             e.printStackTrace();
         }

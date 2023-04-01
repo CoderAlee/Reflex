@@ -3,6 +3,7 @@ package org.alee.reflex;
 import org.alee.reflex.annotation.MethodParams;
 import org.alee.reflex.annotation.MethodReflexParams;
 import org.alee.reflex.annotation.ReName;
+import org.alee.reflex.annotation.ReflexMeta;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -19,12 +20,13 @@ abstract class BaseMethod {
     protected Method mMethod;
 
     BaseMethod(Class<?> cls, Field field) throws NoSuchMethodException {
+        boolean meta = field.isAnnotationPresent(ReflexMeta.class);
         if (field.isAnnotationPresent(MethodParams.class)) {
-            mMethod = handleWithParams(cls, field);
+            mMethod = handleWithParams(cls, field, meta);
         } else if (field.isAnnotationPresent(MethodReflexParams.class)) {
-            mMethod = handleWithReflexParams(cls, field);
+            mMethod = handleWithReflexParams(cls, field, meta);
         } else {
-            mMethod = handleWithNoParams(cls, field);
+            mMethod = handleWithNoParams(cls, field, meta);
         }
         if (null == mMethod) {
             throw new NoSuchMethodException("Not find [" + field.getName() + "] function in [" + cls.getName() + "]");
@@ -37,29 +39,32 @@ abstract class BaseMethod {
      *
      * @param cls   类
      * @param field 要反射的映射字段
+     * @param meta  是否是元数据
      * @return {@link Method}
      * @throws NoSuchMethodException {@link NoSuchMethodException}
      */
-    protected abstract Method handleWithParams(Class<?> cls, Field field) throws NoSuchMethodException;
+    protected abstract Method handleWithParams(Class<?> cls, Field field, boolean meta) throws NoSuchMethodException;
 
     /**
      * 处理带有反射参数的函数
      *
      * @param cls   类
      * @param field 要反射的映射字段
+     * @param meta  是否是元数据
      * @return {@link Method}
      * @throws NoSuchMethodException {@link NoSuchMethodException}
      */
-    protected abstract Method handleWithReflexParams(Class<?> cls, Field field) throws NoSuchMethodException;
+    protected abstract Method handleWithReflexParams(Class<?> cls, Field field, boolean meta) throws NoSuchMethodException;
 
     /**
      * 处理不带参数的函数
      *
      * @param cls   类
      * @param field 要反射的映射字段
+     * @param meta  是否是元数据
      * @return {@link Method}
      */
-    protected abstract Method handleWithNoParams(Class<?> cls, Field field);
+    protected abstract Method handleWithNoParams(Class<?> cls, Field field, boolean meta);
 
     /**
      * 获取原始类型

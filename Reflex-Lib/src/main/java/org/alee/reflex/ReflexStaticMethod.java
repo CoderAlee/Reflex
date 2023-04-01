@@ -21,7 +21,7 @@ public final class ReflexStaticMethod<RESULT> extends BaseMethod {
     }
 
     @Override
-    protected Method handleWithParams(Class<?> cls, Field field) throws NoSuchMethodException {
+    protected Method handleWithParams(Class<?> cls, Field field, boolean meta) throws NoSuchMethodException {
         Class<?>[] types = field.getAnnotation(MethodParams.class).value();
         for (int i = 0; i < types.length; i++) {
             Class<?> clazz = types[i];
@@ -35,11 +35,15 @@ public final class ReflexStaticMethod<RESULT> extends BaseMethod {
                 }
             }
         }
-        return cls.getDeclaredMethod(getRealMethodName(field), types);
+        if (meta) {
+            return ClassMapping.getDeclaredMethod.call(cls, getRealMethodName(field), types);
+        } else {
+            return cls.getDeclaredMethod(getRealMethodName(field), types);
+        }
     }
 
     @Override
-    protected Method handleWithReflexParams(Class<?> cls, Field field) throws NoSuchMethodException {
+    protected Method handleWithReflexParams(Class<?> cls, Field field, boolean meta) throws NoSuchMethodException {
         boolean arrayset = false;
         String[] typeNames = field.getAnnotation(MethodReflexParams.class).value();
         Class<?>[] types = new Class<?>[typeNames.length];
@@ -72,19 +76,32 @@ public final class ReflexStaticMethod<RESULT> extends BaseMethod {
             }
         }
         try {
-            return cls.getDeclaredMethod(getRealMethodName(field), types);
+            if (meta) {
+                return ClassMapping.getDeclaredMethod.call(cls, getRealMethodName(field), types);
+            } else {
+                return cls.getDeclaredMethod(getRealMethodName(field), types);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             if (arrayset) {
-                return cls.getDeclaredMethod(getRealMethodName(field), types2);
+                if (meta)
+                    return ClassMapping.getDeclaredMethod.call(cls, getRealMethodName(field), types2);
+                else
+                    return cls.getDeclaredMethod(getRealMethodName(field), types2);
             }
         }
         return null;
     }
 
     @Override
-    protected Method handleWithNoParams(Class<?> cls, Field field) {
-        for (Method method : cls.getDeclaredMethods()) {
+    protected Method handleWithNoParams(Class<?> cls, Field field, boolean meta) {
+        Method[] methods;
+        if (meta) {
+            methods = ClassMapping.getDeclaredMethods.call(cls);
+        } else {
+            methods = cls.getDeclaredMethods();
+        }
+        for (Method method : methods) {
             if (method.getName().equals(getRealMethodName(field))) {
                 if (0 == method.getParameterTypes().length) {
                     return method;
