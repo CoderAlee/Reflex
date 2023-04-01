@@ -2,7 +2,8 @@ apply plugin: 'java-library'
 apply plugin: "com.github.johnrengelman.shadow"
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.github.panpf.bintray-publish'
-group='org.alee.component'
+apply plugin: 'maven-publish'
+group = 'org.alee.component.tools'
 dependencies {
 
 }
@@ -24,4 +25,16 @@ publish {
     publishVersion = '2.1.0' //依赖名implementation 'x:y:z'中的z
     desc = '一款声明式反射框架' //对这个库的描述
     website = 'https://github.com/CoderAlee/Reflex' //VCS地址,填写该项目的Github地址就好
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'org.alee.component.tools'
+                artifactId = 'reflex'
+                version = '2.0.1'
+            }
+        }
+    }
 }
